@@ -1,0 +1,68 @@
+/* Design system tokens (CSS variables) */
+:root {
+  /* Colors */
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --border: #e5e4e7;
+  --muted: rgba(107, 99, 117, 0.12);
+  --code-bg: #f4f3ec;
+
+  /* Brand / accent */
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+
+  /* States */
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+
+  /* Effects */
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  /* Typography */
+  --sans: "PT Sans", sans-serif;
+  --heading: "PT Sans", sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  /* Brand palette specific to Proyek.in UI */
+  --brand-navy: #052758;
+  --brand-blue: #0846a1;
+  --brand-orange: #d97706;
+  --field-bg: #f2f7fc;
+  --field-border: #f0f2f5;
+  --text-body: #3f5471;
+  --text-muted: #8a9db9;
+  --surface-soft: #eef3fa;
+
+  /* Spacing (use as: padding: var(--space-4)) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --surface: #1b1c24;
+    --border: #2e303a;
+    --muted: rgba(156, 163, 175, 0.16);
+    --code-bg: #1f2028;
+
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
