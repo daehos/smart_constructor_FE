@@ -1,24 +1,25 @@
-function VendorRow({ vendor, onTogglePeek, peekOpen }) {
+function VendorRow({ vendor, onTogglePeek, peekOpen, striped = false }) {
   return (
     <button
       type="button"
       onClick={() => onTogglePeek?.(vendor._id)}
-      className="grid w-full grid-cols-[1fr_120px] items-center gap-3 rounded-xl border border-[#E5E7EB] bg-white px-4 py-3 text-left hover:bg-[#F9FAFB]"
+      className={[
+        "grid w-full grid-cols-[36px_1fr_120px] items-center gap-2 px-4 py-3 text-left transition-colors",
+        striped ? "bg-[#F2F7FC]" : "bg-white",
+        "hover:bg-[#EEF3FA]/70",
+      ].join(" ")}
     >
-      <div>
-        <p className="text-[13px]/[18px] font-semibold text-[#111827]">
-          {vendor.namaPerusahaan}
-        </p>
-      </div>
-      <div className="text-right text-[12px]/[18px] text-[#6B7280]">
-        <span className="inline-flex items-center gap-2">
-          {vendor.kategoriSpesialisasi}
-          <span className="text-[#9CA3AF]">{peekOpen ? "▴" : "▾"}</span>
-        </span>
-      </div>
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-md  bg-white text-[16px] font-medium leading-none text-[#6B7280] shadow-sm">
+        {peekOpen ? "−" : "+"}
+      </span>
+      <p className="text-[13px]/[18px]  text-[#121212]">
+        {vendor.namaPerusahaan}
+      </p>
+      <p className=" text-[12px]/[18px] text-[#121212]">
+        {vendor.kategoriSpesialisasi}
+      </p>
     </button>
   );
 }
 
 export default VendorRow;
-

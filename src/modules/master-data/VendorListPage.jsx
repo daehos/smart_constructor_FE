@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { CaretUpDown, Plus } from "@phosphor-icons/react";
 import { FilterChip } from "@/components/ui/filter-chip";
 import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
@@ -8,10 +10,12 @@ import VendorRow from "./components/VendorRow";
 import VendorPeekCard from "./components/VendorPeekCard";
 import VendorFilterSheet from "./components/VendorFilterSheet";
 import { vendorsApi } from "@/services/vendors";
+import { SlidersHorizontalIcon } from "lucide-react";
 
 const PAGE_SIZE = 20;
 
 function VendorListPage() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All Vendors");
   const [peekId, setPeekId] = useState(null);
@@ -26,7 +30,10 @@ function VendorListPage() {
   }, [activeCategory, specializations]);
 
   const vendorsQuery = useQuery({
-    queryKey: ["vendors", { q: query, kategoriSpesialisasi, page, limit: PAGE_SIZE }],
+    queryKey: [
+      "vendors",
+      { q: query, kategoriSpesialisasi, page, limit: PAGE_SIZE },
+    ],
     queryFn: () =>
       vendorsApi.list({
         q: query || undefined,
@@ -45,7 +52,7 @@ function VendorListPage() {
     setPeekId((current) => (current === id ? null : id));
   };
 
-  const totalLabel = `Total ${total} Data`;
+  // const totalLabel = ;
 
   return (
     <div className="space-y-4">
@@ -68,17 +75,18 @@ function VendorListPage() {
             setPeekId(null);
           }}
         />
-        <button
-          type="button"
-          className="h-10 rounded-lg border border-[#E5E7EB] bg-white px-3 text-[12px] font-semibold text-[#111827]"
-          onClick={() => setFilterOpen(true)}
-        >
-          Filter
-        </button>
       </div>
 
       <div className="flex items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            className="h-8 rounded-lg border flex justify-center items-center gap-2 border-[#c2cee1] bg-white px-3 text-[12px] font-semibold text-[#3f5471]"
+            onClick={() => setFilterOpen(true)}
+          >
+            <SlidersHorizontalIcon size={16} />
+            Filter
+          </button>
           {["All Vendors", "General Contractor", "ME"].map((chip) => (
             <FilterChip
               key={chip}
@@ -93,42 +101,53 @@ function VendorListPage() {
             </FilterChip>
           ))}
         </div>
-        <div className="text-[12px]/[18px] text-[#6B7280]">{totalLabel}</div>
       </div>
 
-      <div className="space-y-2">
-        <div className="grid grid-cols-[1fr_120px] px-1 text-[11px]/[16px] text-[#6B7280]">
-          <span>Nama Vendor</span>
-          <span className="text-right">Kategori</span>
-        </div>
+      {!vendorsQuery.isLoading && pageItems.length === 0 ? (
+        <EmptyState
+          title="Not data found"
+          description="Try adjusting your search or filter options to find what you’re looking for"
+          actionLabel="Reset Filter"
+          onAction={() => {
+            setQuery("");
+            setActiveCategory("All Vendors");
+            setPage(1);
+            setPeekId(null);
+          }}
+        />
+      ) : (
+        <>
+          <div className="text-[12px]/[18px] text-[#6B7280]">
+            Total <span className="font-bold">{total} Data</span>
+          </div>
 
-        {!vendorsQuery.isLoading && pageItems.length === 0 ? (
-          <EmptyState
-            title="Not data found"
-            description="Try adjusting your search or filter options to find what you’re looking for"
-            actionLabel="Reset Filter"
-            onAction={() => {
-              setQuery("");
-              setActiveCategory("All Vendors");
-              setPage(1);
-              setPeekId(null);
-            }}
-          />
-        ) : (
-          <>
-            {pageItems.map((vendor) => (
+          <div className="overflow-hidden rounded-xl border border-[#E5E7EB] bg-white">
+            <div className="grid grid-cols-[36px_1fr_120px] items-center gap-2 bg-[#e7f0fe] px-4 py-3 text-[13px]/[18px] font-medium text-[#3f5471]">
+              <span aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5">
+                Nama Vendor
+                <CaretUpDown size={14} className="text-[#3f5471]" />
+              </span>
+              <span className="inline-flex items-center  gap-1.5">
+                Kategori
+                <CaretUpDown size={14} className="text-[#3f5471]" />
+              </span>
+            </div>
+
+            {pageItems.map((vendor, index) => (
               <div key={vendor._id}>
                 <VendorRow
                   vendor={vendor}
+                  striped={index % 2 === 1}
                   peekOpen={peekId === vendor._id}
                   onTogglePeek={handleTogglePeek}
                 />
                 {peekId === vendor._id && <VendorPeekCard vendor={vendor} />}
               </div>
             ))}
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
 
       {total > 0 && (
         <Pagination page={page} totalPages={totalPages} onChange={setPage} />
@@ -152,9 +171,17 @@ function VendorListPage() {
           setPeekId(null);
         }}
       />
+
+      <button
+        type="button"
+        onClick={() => navigate("/master-data/vendor/new")}
+        className="fixed bottom-6 right-5 z-40 flex size-14 items-center justify-center rounded-full bg-[#052758] text-white shadow-[0_4px_14px_rgba(5,39,88,0.35)] hover:opacity-95 active:opacity-90"
+        aria-label="Tambah vendor"
+      >
+        <Plus size={28} weight="bold" />
+      </button>
     </div>
   );
 }
 
 export default VendorListPage;
-

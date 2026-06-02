@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { SearchInput } from "@/components/ui/search-input";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -16,8 +17,16 @@ const STATUS_TO_ENUM = {
 };
 
 function OrderHistoryPage() {
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Semua");
+
+  useEffect(() => {
+    const fromUrl = searchParams.get("status");
+    if (fromUrl && STATUS_TO_ENUM[fromUrl]) {
+      setStatus(fromUrl);
+    }
+  }, [searchParams]);
   const [page, setPage] = useState(1);
   const limit = 20;
   const [month] = useState("2026-01");

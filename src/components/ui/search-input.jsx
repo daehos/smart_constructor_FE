@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 function SearchInput({ className = "", ...props }) {
   return (
     <div className={cn("relative w-full", className)}>
-      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[16px] text-[#9CA3AF]">
-        🔍
+      <span className="pointer-events-none absolute left-3 bg-[#f2f7fc] top-1/2 -translate-y-1/2 text-[16px] text-[#9CA3AF]">
+        <MagnifyingGlassIcon size={16} />
       </span>
       <input
         type="search"
@@ -16,4 +17,3 @@ function SearchInput({ className = "", ...props }) {
 }
 
 export { SearchInput };
-

@@ -16,12 +16,20 @@ import VendorEditPage from "../../modules/master-data/VendorEditPage";
 import WorkerListPage from "../../modules/master-data/WorkerListPage";
 import ProcurementLayout from "../../modules/procurement/ProcurementLayout";
 import PriceComparisonPage from "../../modules/procurement/PriceComparisonPage";
+import GoodsOrderPage from "../../modules/procurement/GoodsOrderPage";
 import OrderFormPage from "../../modules/procurement/OrderFormPage";
 import OrderHistoryPage from "../../modules/procurement/OrderHistoryPage";
 import OrderDetailPage from "../../modules/procurement/OrderDetailPage";
+import ProductListPage from "../../modules/procurement/ProductListPage";
+import OrderReviewPage from "../../modules/procurement/OrderReviewPage";
 import PayrollPage from "../../modules/payroll/PayrollPage";
 import LogActivityPage from "../../modules/log-activity/LogActivityPage";
 import SettingsPage from "../../modules/settings/SettingsPage";
+import ExpenseManagementLayout from "../../modules/expense-management/ExpenseManagementLayout";
+import ExpenseListPage from "../../modules/expense-management/ExpenseListPage";
+import ExpenseReportPage from "../../modules/expense-management/ExpenseReportPage";
+import ExpenseManualInputPage from "../../modules/expense-management/ExpenseManualInputPage";
+import ExpenseUploadReceiptPage from "../../modules/expense-management/ExpenseUploadReceiptPage";
 
 export const router = createBrowserRouter([
   {
@@ -58,12 +66,13 @@ export const router = createBrowserRouter([
               { path: "worker", element: <WorkerListPage /> },
             ],
           },
-          { path: "procurement", element: <Navigate to="/procurement/comparison" replace /> },
+          { path: "procurement", element: <Navigate to="/procurement/ordering" replace /> },
           {
             path: "procurement",
             element: <ProcurementLayout />,
             children: [
               { path: "comparison", element: <PriceComparisonPage /> },
+              { path: "ordering", element: <GoodsOrderPage /> },
               { path: "order/:vendorId", element: <OrderFormPage /> },
               { path: "history", element: <OrderHistoryPage /> },
               { path: "history/:orderId", element: <OrderDetailPage /> },
@@ -72,6 +81,22 @@ export const router = createBrowserRouter([
           { path: "payroll", element: <PayrollPage /> },
           { path: "log-activity", element: <LogActivityPage /> },
           { path: "settings", element: <SettingsPage /> },
+          {
+            path: "expense-management",
+            element: <Navigate to="/expense-management/list" replace />,
+          },
+          {
+            path: "expense-management",
+            element: <ExpenseManagementLayout />,
+            children: [
+              { path: "list", element: <ExpenseListPage /> },
+              { path: "report", element: <ExpenseReportPage /> },
+            ],
+          },
+          { path: "expense-management/manual", element: <ExpenseManualInputPage /> },
+          { path: "expense-management/upload", element: <ExpenseUploadReceiptPage /> },
+          { path: "procurement/products", element: <ProductListPage /> },
+          { path: "procurement/review", element: <OrderReviewPage /> },
         ],
       },
       { path: "*", element: <Navigate to="/login" replace /> },

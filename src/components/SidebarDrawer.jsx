@@ -16,8 +16,16 @@ const sections = [
   {
     label: "Procurement",
     items: [
+      { to: "/procurement/ordering", label: "Pemesanan Barang" },
       { to: "/procurement/comparison", label: "Perbandingan Harga Vendor" },
       { to: "/procurement/history", label: "Riwayat Pemesanan" },
+    ],
+  },
+  {
+    label: "Expense Management",
+    items: [
+      { to: "/expense-management/list", label: "Daftar Pengeluaran" },
+      { to: "/expense-management/report", label: "Laporan Pengeluaran" },
     ],
   },
 ];

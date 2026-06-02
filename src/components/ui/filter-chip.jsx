@@ -5,10 +5,10 @@ function FilterChip({ active, children, className = "", ...props }) {
     <button
       type="button"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px]/[18px]",
+        "inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-[12px]/[18px]",
         active
-          ? "border-[#0846A1] bg-[#0846A1]/5 text-[#0846A1]"
-          : "border-[#E5E7EB] bg-white text-[#4B5563]",
+          ? " text-white bg-[#e07400] font-bold"
+          : "border-[#E5E7EB] bg-[#f2f7fc] text-[#4B5563]",
         className,
       )}
       {...props}
@@ -19,4 +19,3 @@ function FilterChip({ active, children, className = "", ...props }) {
 }
 
 export { FilterChip };
-

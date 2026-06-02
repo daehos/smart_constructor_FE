@@ -12,6 +12,9 @@ api.interceptors.request.use((cfg) => {
     cfg.headers = cfg.headers ?? {};
     cfg.headers.Authorization = `Bearer ${token}`;
   }
+  if (cfg.data instanceof FormData) {
+    delete cfg.headers["Content-Type"];
+  }
   return cfg;
 });
 
